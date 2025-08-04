@@ -1,11 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import CreateRequestScreen from './src/screens/CreateRequestScreen'
 
 export default function App() {
+
+  console.log('App component is running')
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Welcome to MeetsApp</Text>
-    </View>
+    <CreateRequestScreen />
+    
   )
 }
 
