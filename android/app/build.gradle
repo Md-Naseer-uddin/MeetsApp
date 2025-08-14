@@ -123,3 +123,5 @@ dependencies {
         exclude group: "com.squareup.okhttp3", module: "okhttp"
     }
 }
+
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"

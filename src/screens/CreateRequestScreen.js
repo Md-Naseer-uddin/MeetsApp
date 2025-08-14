@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, FlatList } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { Alert } from 'react-native';
+import axios from 'axios';
+import {BASE_URL} from '@env';
 
 export default function CreateRequestScreen() {
   const [topic, setTopic] = useState('');
@@ -42,6 +45,55 @@ export default function CreateRequestScreen() {
 
   const formatTime = (t) =>
     t.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+
+  const handleSubmit = async () => {
+    if (!topic || !description || !participants || !targetGroup || !duration || !location) {
+      Alert.alert('Error', 'Please fill all fields');
+      return;
+    }
+        
+
+    try {
+      const response = await axios.post(`${BASE_URL}/institutions/Cevent`, {
+        topic,
+        description,
+        date,
+        participants,
+        targetGroup,
+        duration
+      });
+      Alert.alert('Success', 'Event request created successfully!');
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Error', 'Could not create request');
+    }
+  };
+
+  // const handleSubmit =()=>{
+    
+  //   console.log('Request Submitted:', {
+  //     topic,
+  //     description,
+  //     date,
+  //     time,
+  //     participants,
+  //     targetGroup,
+  //     duration,
+  //     location
+  //   });
+  //   setDate(new Date());
+  //   setTime(new Date());
+  //   setTopic('');
+  //   setDescription('');
+  //   setParticipants('');
+  //   setTargetGroup('');
+  //   setDuration('');
+  //   setLocation('');
+    
+  // }
+
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -142,7 +194,7 @@ export default function CreateRequestScreen() {
         onChangeText={setLocation}
       />
 
-      <TouchableOpacity style={styles.submitButton}>
+      <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
         <Text style={styles.submitText}>SUBMIT REQUEST</Text>
       </TouchableOpacity>
     </ScrollView>

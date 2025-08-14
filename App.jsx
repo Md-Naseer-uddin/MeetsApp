@@ -56,22 +56,60 @@
 //   );
 // }
 
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+// import React from 'react';
+// import { NavigationContainer } from '@react-navigation/native';
+// import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+// import CreateRequestScreen from './src/screens/CreateRequestScreen'; // adjust path if needed
+
+// // const Stack = createNativeStackNavigator();
+
+// const App = () => {
+//   return (
+//     <SafeAreaProvider>
+//       <CreateRequestScreen/>
+//     </SafeAreaProvider>
+//   );
+// };
+
+// export default App;
+
+
+import { NewAppScreen } from '@react-native/new-app-screen';
+import { StatusBar, StyleSheet, useColorScheme, View, Text } from 'react-native';
+// import LoginPage from './screens/Login'
+import RegisterPage from './src/screens/registrationScreens/SmeRegister.jsx'
+import AdminRegisterPage from './src/screens/registrationScreens/AdminRegistration.jsx'
+import initialHome from './src/screens/registrationScreens/home.jsx'
+import { create } from 'react-native/types_generated/Libraries/ReactNative/ReactFabricPublicInstance/ReactNativeAttributePayload';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+// import HomeScreen from './screens/home';
 
-import CreateRequestScreen from './src/screens/CreateRequestScreen'; // adjust path if needed
+function App() {
+  const isDarkMode = useColorScheme() === 'dark';
 
-// const Stack = createNativeStackNavigator();
-
-const App = () => {
+  const Stack = createNativeStackNavigator()
   return (
-    <SafeAreaProvider>
-      <CreateRequestScreen/>
-    </SafeAreaProvider>
+   <NavigationContainer>
+    <Stack.Navigator initialRouteName='home'  screenOptions={{
+      headerShown:false
+    }}>
+      <Stack.Screen name='home' component={initialHome}/>
+      {/* <Stack.Screen name='Login' component={LoginPage}/> */}
+      <Stack.Screen name='smeRegister' component={RegisterPage}/>
+      <Stack.Screen name='adminRegister' component={AdminRegisterPage}/>
+    </Stack.Navigator>
+
+   </NavigationContainer>
   );
-};
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 export default App;
-
